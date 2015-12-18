@@ -3,7 +3,7 @@ class Lang::Token
     MATCH = ['+', '-', '>', '<']
 
     def consume(stream)
-      @token = stream.advance
+      stream.advance
     end
   end
 end

@@ -3,8 +3,7 @@ class Lang::Token
     MATCH = ["'", '"']
 
     def consume(stream)
-      @token = stream.until(stream.char, inclusive: true)
-      stream.advance
+      stream.until(stream.char, inclusive: true)
     end
   end
 end

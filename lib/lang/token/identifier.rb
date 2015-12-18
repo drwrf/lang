@@ -3,8 +3,7 @@ class Lang::Token
     MATCH = /[a-zA-Z]/
 
     def consume(stream)
-      @token = stream.until(/[\s:,\(\[\{\]\}\)]/)
-      stream.advance
+      stream.until(/[\s:,\(\[\{\]\}\)]/)
     end
   end
 end

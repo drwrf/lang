@@ -6,11 +6,19 @@ class Lang::Token
   end
 
   class Base
-    attr_reader :loc
+    attr_reader :start, :end
 
     def self.match?(stream)
       stream.match?(self::MATCH)
     end
+
+    def initialize(stream)
+      @start = stream.loc
+      @token = consume(stream)
+      @end = stream.loc
+    end
+
+    private
 
     def consume(stream)
       raise NotImplementedError

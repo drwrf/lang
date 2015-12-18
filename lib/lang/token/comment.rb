@@ -3,8 +3,7 @@ class Lang::Token
     MATCH = "#"
 
     def consume(stream)
-      @token = stream.until("\n")
-      stream.advance
+      stream.until("\n")
     end
   end
 end

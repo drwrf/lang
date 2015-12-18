@@ -2,6 +2,8 @@ class Lang::Stream
   def initialize(input)
     @input = input.chars.to_a
     @offset = 0
+    @line = 1
+    @col = 1
   end
 
   def eof?
@@ -20,7 +22,16 @@ class Lang::Stream
 
   def advance
     result = @input[@offset]
+
     @offset += 1
+
+    if result == "\n"
+      @line += 1
+      @col = 1
+    else
+      @col += 1
+    end
+
     result
   end
 
@@ -41,8 +52,10 @@ class Lang::Stream
       advance
     end
 
-    @offset -= 1
-
     chars
+  end
+
+  def loc
+    [@line, @col]
   end
 end

@@ -3,7 +3,6 @@ end
 
 require_relative 'lang/stream'
 require_relative 'lang/token'
-require_relative 'lang/token/assignment'
 require_relative 'lang/token/capture'
 require_relative 'lang/token/comment'
 require_relative 'lang/token/identifier'

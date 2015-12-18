@@ -25,9 +25,7 @@ class Lang::Tokenizer
       end
 
       if cls
-        token = cls.new
-        token.consume(@stream)
-        push_token(token)
+        push_token(cls.new(@stream))
         next
       end
 

@@ -3,8 +3,7 @@ class Lang::Token
     MATCH = /[0-9]/
 
     def consume(stream)
-      @token = stream.until(/[^0-9.]/)
-      stream.advance
+      stream.until(/[^0-9.]/)
     end
   end
 end

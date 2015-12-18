@@ -8,7 +8,7 @@ class Lang::Token
     ]
 
     def consume(stream)
-      @token = stream.advance
+      stream.advance
     end
   end
 end
