@@ -11,6 +11,8 @@ class Lang::Stream
   def match?(test)
     if test.is_a? String
       self.char == test
+    elsif test.is_a? Array
+      test.include? self.char
     else
       !!(self.char =~ test)
     end

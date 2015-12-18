@@ -28,7 +28,14 @@ class Lang::Tokenizer
 
       # Identifier
       if @stream.match?(/[a-zA-Z]/)
-        push_token(@stream.until(/\s|:/))
+        push_token(@stream.until(/[\s:,\(\[\{\]\}\)]/))
+        @stream.advance
+        next
+      end
+
+      # Operators
+      if @stream.match?(['+', '-', '>', '<'])
+        push_token(@stream.char)
         @stream.advance
         next
       end
@@ -49,6 +56,13 @@ class Lang::Tokenizer
 
       # Assignment
       if @stream.match?(":")
+        push_token(@stream.char)
+        @stream.advance
+        next
+      end
+
+      # Array and object captures
+      if @stream.match?(['(', '{', '[', ']', '}', ')', ','])
         push_token(@stream.char)
         @stream.advance
         next
