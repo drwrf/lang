@@ -1,9 +1,11 @@
 class Lang::Stream
+  attr_reader :line, :column
+
   def initialize(input)
     @input = input.chars.to_a
     @offset = 0
     @line = 1
-    @col = 1
+    @column = 1
   end
 
   def eof?
@@ -12,7 +14,7 @@ class Lang::Stream
 
   def match?(test)
     if test.is_a? String
-      self.char == test
+      self.peek(amount: test.length) == test
     elsif test.is_a? Array
       test.include? self.char
     else
@@ -20,23 +22,28 @@ class Lang::Stream
     end
   end
 
-  def advance
-    result = @input[@offset]
+  def char
+    @input[@offset]
+  end
 
-    @offset += 1
+  def peek(amount: 1)
+    @input.slice(@offset, amount).join
+  end
 
+  def advance(amount: 1)
+    result = self.peek(amount: amount)
+
+    @offset += amount
+
+    # TODO: this will break when advancing over newlines
     if result == "\n"
       @line += 1
-      @col = 1
+      @column = 1
     else
-      @col += 1
+      @column += amount
     end
 
     result
-  end
-
-  def char
-    @input[@offset]
   end
 
   def until(test, inclusive: false)
@@ -56,6 +63,6 @@ class Lang::Stream
   end
 
   def loc
-    [@line, @col]
+    [@line, @column]
   end
 end

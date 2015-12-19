@@ -1,27 +1,25 @@
 class Lang::Token
-  def initialize(token, line, col)
-    @token = token
-    @line = line
-    @col = col
+  attr_reader :start, :end
+
+  def self.token(name, match, &block)
+    cls = Class.new(self, &block)
+    cls.const_set('MATCH', match)
+    const_set(name, cls)
   end
 
-  class Base
-    attr_reader :start, :end
+  def self.match?(stream)
+    stream.match?(self::MATCH)
+  end
 
-    def self.match?(stream)
-      stream.match?(self::MATCH)
-    end
+  def initialize(stream)
+    @start = stream.loc
+    @lexeme = consume(stream)
+    @end = stream.loc
+  end
 
-    def initialize(stream)
-      @start = stream.loc
-      @token = consume(stream)
-      @end = stream.loc
-    end
+  private
 
-    private
-
-    def consume(stream)
-      raise NotImplementedError
-    end
+  def consume(stream)
+    stream.advance(amount: self.class::MATCH.length)
   end
 end

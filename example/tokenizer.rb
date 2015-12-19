@@ -9,9 +9,22 @@ var month: 'December'
 # And immutable variables...
 val version: 0.1
 
-# Obviously there are booleans...
-val true: true
-val false: false
+# There are all the basic operators...
+1 > 0
+1 < 2
+2 >= 2
+3 <= 3
+42 == 42
+(2 + 2) != 5
+
+# Multi-line strings work
+val multi-line-string: "
+  This is a great string!
+"
+
+# There are booleans (but no nil)...
+true  != false
+false != true
 
 # Lists of items...
 val list: [
