@@ -16,7 +16,7 @@ class Lang::Stream
     if test.is_a? String
       self.peek(amount: test.length) == test
     elsif test.is_a? Array
-      test.include? self.char
+      !!(test.find {|t| self.match?(t) })
     else
       !!(self.char =~ test)
     end

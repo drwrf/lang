@@ -20,6 +20,14 @@ class Lang::Token
   private
 
   def consume(stream)
-    stream.advance(amount: self.class::MATCH.length)
+    match = self.class::MATCH
+
+    if match.is_a? ::String
+      stream.advance(amount: match.length)
+    elsif match.is_a? ::Array
+      stream.advance(amount: match.find {|t| stream.match?(t) }.length)
+    else
+      raise NotImplementedError
+    end
   end
 end

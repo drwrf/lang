@@ -3,6 +3,12 @@ class Lang::Token
   token :Newline, "\n"
   token :Colon, ":"
   token :Comma, ","
+  token :Operator, [
+    '+', '-',
+    '>=', '>',
+    '<=', '<',
+    '==', '!=',
+  ]
 
   # Capture groups...
   token :OpenParenthesis,  "("
@@ -11,20 +17,6 @@ class Lang::Token
   token :CloseBracket,     "]"
   token :OpenBrace,        "{"
   token :CloseBrace,       "}"
-
-  # Operators...
-  token :Add,                '+'
-  token :Subtract,           '-'
-  token :GreaterThan,        '>'
-  token :GreaterThanOrEqual, '>='
-  token :LessThan,           '<'
-  token :LessThanOrEqual,    '<='
-  token :Equal,              '=='
-  token :NotEqual,           '!='
-
-  # Primitives...
-  token :True, 'true'
-  token :False, 'false'
 
   # Complex tokens....
   token :String, ['"', "'"] do

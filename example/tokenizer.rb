@@ -2,6 +2,13 @@ require 'pp'
 require File.expand_path('../../lib/lang', __FILE__)
 
 tokenizer = Lang::Tokenizer.new(<<eos
+1 > 0
+1 < 2
+2 >= 2
+3 <= 3
+42 == 42
+(2 + 2) != 5
+
 # You can define variables...
 var year: 2015
 var month: 'December'
@@ -16,11 +23,6 @@ val version: 0.1
 3 <= 3
 42 == 42
 (2 + 2) != 5
-
-# Multi-line strings work
-val multi-line-string: "
-  This is a great string!
-"
 
 # There are booleans (but no nil)...
 true  != false
