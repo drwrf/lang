@@ -1,6 +1,6 @@
 class Lang::Tokenizer
   TYPES = [
-    Lang::Token::Newline,
+    Lang::Token::Indent,
     Lang::Token::Comment,
     Lang::Token::Identifier,
     Lang::Token::Operator,

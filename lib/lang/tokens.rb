@@ -1,5 +1,9 @@
 Lang::Token.define do
-  token :Newline, "\n"
+  token :Indent, "\n" do
+    def consume(stream)
+      stream.until(/[^ \t]/)
+    end
+  end
 
   # Delimiters are used for separating statements
   token :Delimiter, [",", ".", ":"]
