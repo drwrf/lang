@@ -1,10 +1,8 @@
 class Lang::Token
   attr_reader :start, :end
 
-  def self.token(name, match, &block)
-    cls = Class.new(self, &block)
-    cls.const_set('MATCH', match)
-    const_set(name, cls)
+  def self.define(&block)
+    class_eval(&block)
   end
 
   def self.match?(stream)
@@ -18,6 +16,12 @@ class Lang::Token
   end
 
   private
+
+  def self.token(name, match, &block)
+    cls = Class.new(self, &block)
+    cls.const_set('MATCH', match)
+    const_set(name, cls)
+  end
 
   def consume(stream)
     match = self.class::MATCH

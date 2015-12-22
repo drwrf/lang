@@ -1,4 +1,4 @@
-class Lang::Token
+Lang::Token.define do
   token :Newline, "\n"
 
   # Delimiters are used for separating statements
