@@ -12,13 +12,15 @@ class Lang::Tokenizer
 
   def initialize(stream)
     @stream = Lang::TextStream.new(stream)
-    @tokens = []
+    @tokens = nil
   end
 
   def tokens
-    if @tokens.any?
+    if @tokens
       return @tokens
     end
+
+    tokens = []
 
     while !@stream.eof? do
       cls = TYPES.find do |type|
@@ -26,7 +28,7 @@ class Lang::Tokenizer
       end
 
       if cls
-        push_token(cls.new(@stream))
+        tokens.push(cls.new(@stream))
         next
       end
 
@@ -40,12 +42,6 @@ class Lang::Tokenizer
                              "at line #{@stream.line}, column #{@stream.column}")
     end
 
-    @tokens
-  end
-
-  private
-
-  def push_token(token)
-    @tokens.push(token)
+    @tokens = Lang::TokenStream.new(tokens)
   end
 end
