@@ -1,24 +1,6 @@
-# You can define variables...
-var year: 2015
-var month: 'December'
 
-# And immutable variables...
-val version: 0.1
 
-# As well as functions...
-def add (number1, number2)
-  number1 + number2
+                                             L a n g
 
-val four: add(2, 2)
 
-# You can pass blocks
-def map (list, &block)
-  result = []
-
-  each list |item|
-    append result, block(item)
-
-  result
-
-val doubled: map(*[1..100]) |i|
-  i * 2
+==================================================================================================
