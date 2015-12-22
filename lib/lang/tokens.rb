@@ -1,8 +1,10 @@
 class Lang::Token
-  # Basic tokens...
   token :Newline, "\n"
-  token :Colon, ":"
-  token :Comma, ","
+
+  # Delimiters are used for separating statements
+  token :Delimiter, [",", ".", ":"]
+
+  # Operators are used for maths...
   token :Operator, [
     '+', '-',
     '>=', '>',
@@ -10,13 +12,12 @@ class Lang::Token
     '==', '!=',
   ]
 
-  # Capture groups...
-  token :OpenParenthesis,  "("
-  token :CloseParenthesis, ")"
-  token :OpenBracket,      "["
-  token :CloseBracket,     "]"
-  token :OpenBrace,        "{"
-  token :CloseBrace,       "}"
+  # Used for certain primitives, like lists and hashes
+  token :Bracket, [
+    "(", ")",
+    "[", "]",
+    "{", "}",
+  ]
 
   # Complex tokens....
   token :String, ['"', "'"] do

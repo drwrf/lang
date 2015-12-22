@@ -16,6 +16,12 @@ var month: 'December'
 # And immutable variables...
 val version: 0.1
 
+# And strings...
+val hello: "world!"
+val haiku: "From time to time
+            the clouds give rest
+            to the moon-beholders."
+
 # There are all the basic operators...
 1 > 0
 1 < 2

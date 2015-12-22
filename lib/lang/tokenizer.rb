@@ -6,14 +6,8 @@ class Lang::Tokenizer
     Lang::Token::Operator,
     Lang::Token::String,
     Lang::Token::Number,
-    Lang::Token::OpenParenthesis,
-    Lang::Token::CloseParenthesis,
-    Lang::Token::OpenBracket,
-    Lang::Token::CloseBracket,
-    Lang::Token::OpenBrace,
-    Lang::Token::CloseBrace,
-    Lang::Token::Comma,
-    Lang::Token::Colon,
+    Lang::Token::Bracket,
+    Lang::Token::Delimiter,
   ]
 
   def initialize(stream)
