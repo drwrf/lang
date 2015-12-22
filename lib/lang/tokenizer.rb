@@ -11,7 +11,7 @@ class Lang::Tokenizer
   ]
 
   def initialize(stream)
-    @stream = Lang::Stream.new(stream)
+    @stream = Lang::TextStream.new(stream)
     @tokens = []
   end
 

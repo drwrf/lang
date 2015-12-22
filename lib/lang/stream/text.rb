@@ -1,4 +1,4 @@
-class Lang::Stream
+class Lang::TextStream
   attr_reader :line, :column
 
   def initialize(input)
