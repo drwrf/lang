@@ -35,7 +35,6 @@ class Lang::Stream
 
     @offset += amount
 
-    # TODO: this will break when advancing over newlines
     if result == "\n"
       @line += 1
       @column = 1
