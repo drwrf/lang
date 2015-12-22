@@ -2,13 +2,6 @@ require 'pp'
 require File.expand_path('../../lib/lang', __FILE__)
 
 tokenizer = Lang::Tokenizer.new(<<eos
-1 > 0
-1 < 2
-2 >= 2
-3 <= 3
-42 == 42
-(2 + 2) != 5
-
 # You can define variables...
 var year: 2015
 var month: 'December'
