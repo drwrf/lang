@@ -13,4 +13,6 @@ Gem::Specification.new do |s|
   s.require_paths    = ["lib"]
   s.files            = `git ls-files`.split("\n")
   s.test_files       = `git ls-files -- {spec}/*`.split("\n")
+
+  s.add_development_dependency "rspec"
 end
