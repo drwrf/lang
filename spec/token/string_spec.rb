@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Lang::Token::String do
   it_behaves_like "a token", {
     "'single-quotes'" => "single-quotes",
