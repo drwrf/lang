@@ -1,5 +1,5 @@
 class Lang::Token
-  attr_reader :start, :end
+  attr_reader :lexeme, :start, :end
 
   def self.define(&block)
     class_eval(&block)

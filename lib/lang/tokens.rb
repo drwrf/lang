@@ -26,7 +26,10 @@ Lang::Token.define do
   # Complex tokens....
   token :String, ['"', "'"] do
     def consume(stream)
-      stream.until(stream.char, inclusive: true)
+      quote = stream.advance
+      lexeme = stream.until(quote)
+      stream.advance
+      lexeme
     end
   end
 

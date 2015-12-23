@@ -45,17 +45,15 @@ class Lang::TextStream
     result
   end
 
-  def until(test, inclusive: false)
-    chars = self.advance
+  def until(test)
+    chars = ''
 
-    while !self.match?(test) && self.char
-      chars += char
-      advance
-    end
+    loop do
+      chars += self.advance
 
-    if inclusive
-      chars += char
-      advance
+      if self.match?(test)
+        break
+      end
     end
 
     chars
