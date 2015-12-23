@@ -8,7 +8,7 @@
 # example:
 #
 # describe Lang::Token::Number do
-#   shared_examples_for "a tokenizer", {
+#   it_behaves_like "a tokenizer", {
 #     "1" => "1"
 #   }
 # end
