@@ -6,7 +6,11 @@ require 'token/shared_examples'
 
 module Helpers
   def tokenize(string)
-    Lang::Tokenizer.new(string).tokens
+    Lang::Tokenizer.new.tokenize(string)
+  end
+
+  def tokenizer
+    Lang::Tokenizer.new
   end
 end
 

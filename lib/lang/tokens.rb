@@ -1,10 +1,21 @@
 Lang::Token.define do
-  token :Indent, "\n" do |s|
-    s.until(/[^ \t]/)
-  end
+  # Used for identifying blocks
+  token :Indent, "\n", up_to: /[^ \t]/
+
+  # Identifiers, for naming variables, methods, etc
+  token :Identifier, /[a-zA-Z]/, up_to: /[\s:,\(\[\{\]\}\)]/
 
   # Delimiters are used for separating statements
   token :Delimiter, [",", ".", ":"]
+
+  # Comments
+  token :Comment, "#", up_to: "\n"
+
+  # Integers and floats, TODO: make distinct
+  token :Number, /[0-9]/, up_to: /[^0-9.]/
+
+  # All types of strings
+  token :String, ['"', "'"], capture: true
 
   # Operators are used for maths...
   token :Operator, [
@@ -20,24 +31,4 @@ Lang::Token.define do
     "[", "]",
     "{", "}",
   ]
-
-  # Complex tokens....
-  token :String, ['"', "'"] do |s|
-    quote = s.advance
-    lexeme = s.until(quote)
-    s.advance
-    lexeme
-  end
-
-  token :Number, /[0-9]/ do |s|
-    s.until(/[^0-9.]/)
-  end
-
-  token :Comment, "#" do |s|
-    s.until("\n")
-  end
-
-  token :Identifier, /[a-zA-Z]/ do |s|
-    s.until(/[\s:,\(\[\{\]\}\)]/)
-  end
 end

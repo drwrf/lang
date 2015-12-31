@@ -4,10 +4,16 @@ class Lang::Token
       class_eval(&block)
     end
 
-    def token(name, match, &block)
+    def token(name, match, up_to: nil, capture: false, &block)
       cls = Class.new(self)
       cls.const_set('MATCH', match)
-      cls.send(:define_method, :consume, &block) if block_given?
+      cls.const_set('UP_TO', up_to)
+      cls.const_set('CAPTURE', capture)
+
+      if block_given?
+        cls.send(:define_method, :consume, &block)
+      end
+
       const_set(name, cls)
     end
   end
@@ -32,14 +38,29 @@ class Lang::Token
 
   def consume(stream)
     match = self.class::MATCH
+    chars = ''
 
     if match.is_a? ::String
-      stream.advance(amount: match.length)
+      chars += advance(stream, match.length)
     elsif match.is_a? ::Array
-      stream.advance(amount: match.find {|t| match?(stream, t) }.length)
+      chars += advance(stream, match.find {|t| match?(stream, t) }.length)
+    elsif match.is_a? ::Regexp
+      chars += advance(stream, 1)
     else
       raise NotImplementedError
     end
+
+    # Match everything until a match is made
+    if self.class::UP_TO
+      chars += advance_until(stream, self.class::UP_TO)
+    # Match everything inside the delimiters
+    elsif self.class::CAPTURE
+      capture = chars
+      chars = advance_until(stream, chars)
+      advance(stream, capture.length)
+    end
+
+    chars
   end
 
   def match?(stream, test)
@@ -50,5 +71,23 @@ class Lang::Token
     else
       !!(stream.peek =~ test)
     end
+  end
+
+  def advance(stream, amount)
+    stream.advance(amount: amount)
+  end
+
+  def advance_until(stream, test)
+    chars = ''
+
+    loop do
+      if stream.peek.nil? || match?(stream, test)
+        break
+      end
+
+      chars += stream.advance
+    end
+
+    chars
   end
 end

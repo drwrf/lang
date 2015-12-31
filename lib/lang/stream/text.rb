@@ -3,9 +3,15 @@ class Lang::TextStream
 
   def initialize(input)
     @input = input.chars.to_a
-    @offset = 0
-    @line = 1
-    @column = 1
+    reset
+  end
+
+  def loop
+    while !eof?
+      yield
+    end
+
+    reset
   end
 
   def eof?
@@ -27,11 +33,17 @@ class Lang::TextStream
   end
 
   def peek(amount: 1)
-    @input.slice(@offset, amount).join
+    if @offset + amount <= @input.length
+      @input.slice(@offset, amount).join
+    end
   end
 
   def advance(amount: 1)
     result = self.peek(amount: amount)
+
+    if !result
+      raise RuntimeError
+    end
 
     @offset += amount
 
@@ -45,18 +57,10 @@ class Lang::TextStream
     result
   end
 
-  def until(test)
-    chars = ''
-
-    loop do
-      chars += self.advance
-
-      if self.match?(test)
-        break
-      end
-    end
-
-    chars
+  def reset
+    @offset = 0
+    @line = 1
+    @column = 1
   end
 
   def loc

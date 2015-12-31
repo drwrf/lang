@@ -10,15 +10,13 @@ class Lang::Tokenizer
     Lang::Token::Delimiter,
   ]
 
-  def initialize(stream, types: nil)
-    @stream = Lang::TextStream.new(stream)
+  def initialize(types: nil)
     @types = types
-    @tokens = nil
   end
 
-  def tokens
-    if @tokens
-      return @tokens
+  def tokenize(stream)
+    if stream.is_a? ::String
+      stream = Lang::TextStream.new(stream)
     end
 
     tokens = []
@@ -43,16 +41,12 @@ class Lang::Tokenizer
                              "at line #{stream.line}, column #{stream.column}")
     end
 
-    @tokens = Lang::TokenStream.new(tokens)
+    Lang::TokenStream.new(tokens)
   end
 
   private
 
   def types
     @types ||= TYPES.map(&:new)
-  end
-
-  def stream
-    @stream
   end
 end
