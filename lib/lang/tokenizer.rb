@@ -21,7 +21,7 @@ class Lang::Tokenizer
 
     tokens = []
 
-    while !stream.eof? do
+    stream.loop do
       token = types.find do |t|
         t.parseable?(stream)
       end
@@ -37,7 +37,7 @@ class Lang::Tokenizer
         next
       end
 
-      raise RuntimeError.new("Invalid token: \"#{stream.char}\" " +
+      raise RuntimeError.new("Invalid token: \"#{stream.peek}\" " +
                              "at line #{stream.line}, column #{stream.column}")
     end
 

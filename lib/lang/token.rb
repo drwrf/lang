@@ -23,9 +23,9 @@ class Lang::Token
       raise RuntimeError
     end
 
-    start = stream.loc
+    start = stream.location
     value = consume(stream)
-    finish = stream.loc
+    finish = stream.location
 
     Lang::Lexeme.new(value, self, start, finish)
   end

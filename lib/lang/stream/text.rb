@@ -6,30 +6,16 @@ class Lang::TextStream
     reset
   end
 
+  def location
+    [@line, @column]
+  end
+
   def loop
     while !eof?
       yield
     end
 
     reset
-  end
-
-  def eof?
-    @offset >= @input.length
-  end
-
-  def match?(test)
-    if test.is_a? String
-      self.peek(amount: test.length) == test
-    elsif test.is_a? Array
-      !!(test.find {|t| self.match?(t) })
-    else
-      !!(self.char =~ test)
-    end
-  end
-
-  def char
-    @input[@offset]
   end
 
   def peek(amount: 1)
@@ -57,13 +43,15 @@ class Lang::TextStream
     result
   end
 
+  private
+
   def reset
     @offset = 0
     @line = 1
     @column = 1
   end
 
-  def loc
-    [@line, @column]
+  def eof?
+    @offset >= @input.length
   end
 end
