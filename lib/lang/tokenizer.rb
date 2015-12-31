@@ -1,13 +1,13 @@
 class Lang::Tokenizer
-  TYPES = [
-    Lang::Token::Indent,
-    Lang::Token::Comment,
-    Lang::Token::Identifier,
-    Lang::Token::Operator,
-    Lang::Token::String,
-    Lang::Token::Number,
-    Lang::Token::Bracket,
-    Lang::Token::Delimiter,
+  TOKENS = [
+    Lang::Token::Indent.new,
+    Lang::Token::Comment.new,
+    Lang::Token::Identifier.new,
+    Lang::Token::Operator.new,
+    Lang::Token::String.new,
+    Lang::Token::Number.new,
+    Lang::Token::Bracket.new,
+    Lang::Token::Delimiter.new,
   ]
 
   def initialize(stream)
@@ -23,12 +23,12 @@ class Lang::Tokenizer
     tokens = []
 
     while !@stream.eof? do
-      cls = TYPES.find do |type|
-        type.match?(@stream)
+      token = TOKENS.find do |t|
+        t.parseable?(@stream)
       end
 
-      if cls
-        tokens.push(cls.new(@stream))
+      if token
+        tokens.push(token.parse(@stream))
         next
       end
 

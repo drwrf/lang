@@ -1,6 +1,7 @@
 module Lang
 end
 
+require_relative 'lang/lexeme'
 require_relative 'lang/token'
 require_relative 'lang/tokens'
 require_relative 'lang/tokenizer'

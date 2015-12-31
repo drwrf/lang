@@ -1,8 +1,6 @@
 Lang::Token.define do
-  token :Indent, "\n" do
-    def consume(stream)
-      stream.until(/[^ \t]/)
-    end
+  token :Indent, "\n" do |s|
+    s.until(/[^ \t]/)
   end
 
   # Delimiters are used for separating statements
@@ -24,30 +22,22 @@ Lang::Token.define do
   ]
 
   # Complex tokens....
-  token :String, ['"', "'"] do
-    def consume(stream)
-      quote = stream.advance
-      lexeme = stream.until(quote)
-      stream.advance
-      lexeme
-    end
+  token :String, ['"', "'"] do |s|
+    quote = s.advance
+    lexeme = s.until(quote)
+    s.advance
+    lexeme
   end
 
-  token :Number, /[0-9]/ do
-    def consume(stream)
-      stream.until(/[^0-9.]/)
-    end
+  token :Number, /[0-9]/ do |s|
+    s.until(/[^0-9.]/)
   end
 
-  token :Comment, "#" do
-    def consume(stream)
-      stream.until("\n")
-    end
+  token :Comment, "#" do |s|
+    s.until("\n")
   end
 
-  token :Identifier, /[a-zA-Z]/ do
-    def consume(stream)
-      stream.until(/[\s:,\(\[\{\]\}\)]/)
-    end
+  token :Identifier, /[a-zA-Z]/ do |s|
+    s.until(/[\s:,\(\[\{\]\}\)]/)
   end
 end

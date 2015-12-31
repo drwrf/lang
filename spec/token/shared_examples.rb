@@ -13,13 +13,13 @@
 #   }
 # end
 shared_examples_for "a tokenizer" do |examples|
-  examples.each do |input, lexeme|
+  examples.each do |input, expected|
     describe "#consume" do
       it "tokenizes #{input}" do
-        token = tokenize(input).next
+        lexeme = tokenize(input).next
 
-        expect(token).to be_a(described_class)
-        expect(token.lexeme).to eq(lexeme)
+        expect(lexeme.type).to be_a(described_class)
+        expect(lexeme.value).to eq(expected)
       end
     end
   end
