@@ -25,22 +25,28 @@ class Lang::TextStream
   end
 
   def advance(amount: 1)
-    result = self.peek(amount: amount)
+    chars = ''
 
-    if !result
-      raise RuntimeError
+    amount.times do
+      char = self.peek
+
+      if !char
+        raise RuntimeError
+      end
+
+      @offset += 1
+
+      if char == "\n"
+        @line += 1
+        @column = 1
+      else
+        @column += 1
+      end
+
+      chars += char
     end
 
-    @offset += amount
-
-    if result == "\n"
-      @line += 1
-      @column = 1
-    else
-      @column += amount
-    end
-
-    result
+    chars
   end
 
   private

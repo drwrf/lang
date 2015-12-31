@@ -32,7 +32,7 @@ class Lang::Tokenizer
       end
 
       # Ignorable whitespace
-      if stream.match?(/\s/)
+      if !!(stream.peek =~ /\s/)
         stream.advance
         next
       end
