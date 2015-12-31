@@ -4,9 +4,9 @@ class Lang::Token
       class_eval(&block)
     end
 
-    def token(name, match, up_to: nil, capture: false, &block)
+    def token(name, start, up_to: nil, capture: false, &block)
       cls = Class.new(self)
-      cls.const_set('MATCH', match)
+      cls.const_set('START', start)
       cls.const_set('UP_TO', up_to)
       cls.const_set('CAPTURE', capture)
 
@@ -19,7 +19,7 @@ class Lang::Token
   end
 
   def parseable?(stream)
-    match?(stream, self.class::MATCH)
+    match?(stream, start)
   end
 
   def parse(stream)
@@ -37,24 +37,23 @@ class Lang::Token
   private
 
   def consume(stream)
-    match = self.class::MATCH
     chars = ''
 
-    if match.is_a? ::String
-      chars += advance(stream, match.length)
-    elsif match.is_a? ::Array
-      chars += advance(stream, match.find {|t| match?(stream, t) }.length)
-    elsif match.is_a? ::Regexp
+    if start.is_a? ::String
+      chars += advance(stream, start.length)
+    elsif start.is_a? ::Array
+      chars += advance(stream, start.find {|t| match?(stream, t) }.length)
+    elsif start.is_a? ::Regexp
       chars += advance(stream, 1)
     else
       raise NotImplementedError
     end
 
     # Match everything until a match is made
-    if self.class::UP_TO
-      chars += advance_until(stream, self.class::UP_TO)
+    if up_to
+      chars += advance_until(stream, up_to)
     # Match everything inside the delimiters
-    elsif self.class::CAPTURE
+    elsif capture?
       capture = chars
       chars = advance_until(stream, chars)
       advance(stream, capture.length)
@@ -89,5 +88,17 @@ class Lang::Token
     end
 
     chars
+  end
+
+  def start
+    self.class::START
+  end
+
+  def up_to
+    self.class::UP_TO
+  end
+
+  def capture?
+    self.class::CAPTURE
   end
 end
