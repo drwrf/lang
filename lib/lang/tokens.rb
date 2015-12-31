@@ -1,21 +1,21 @@
 Lang::Token.define do
   # Used for identifying blocks
-  token :Indent, "\n", up_to: /[^ \t]/
+  token :Indent, "\n", capture: /[^ \t]/
 
   # Identifiers, for naming variables, methods, etc
-  token :Identifier, /[a-zA-Z]/, up_to: /[\s:,\(\[\{\]\}\)]/
+  token :Identifier, /[a-zA-Z]/, capture: /[\s:,\(\[\{\]\}\)]/
 
   # Delimiters are used for separating statements
   token :Delimiter, [",", ".", ":"]
 
   # Comments
-  token :Comment, "#", up_to: "\n"
+  token :Comment, "#", capture: "\n"
 
   # Integers and floats, TODO: make distinct
-  token :Number, /[0-9]/, up_to: /[^0-9.]/
+  token :Number, /[0-9]/, capture: /[^0-9.]/
 
   # All types of strings
-  token :String, ['"', "'"], capture: true
+  token :String, ['"', "'"], quote: true
 
   # Operators are used for maths...
   token :Operator, [

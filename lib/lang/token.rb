@@ -4,15 +4,11 @@ class Lang::Token
       class_eval(&block)
     end
 
-    def token(name, start, up_to: nil, capture: false, &block)
+    def token(name, start, capture: nil, quote: false, &block)
       cls = Class.new(self)
       cls.const_set('START', start)
-      cls.const_set('UP_TO', up_to)
       cls.const_set('CAPTURE', capture)
-
-      if block_given?
-        cls.send(:define_method, :consume, &block)
-      end
+      cls.const_set('QUOTE', quote)
 
       const_set(name, cls)
     end
@@ -50,13 +46,13 @@ class Lang::Token
     end
 
     # Match everything until a match is made
-    if up_to
-      chars += advance_until(stream, up_to)
+    if capture
+      chars += advance_until(stream, capture)
     # Match everything inside the delimiters
-    elsif capture?
-      capture = chars
+    elsif quote?
+      quote = chars
       chars = advance_until(stream, chars)
-      advance(stream, capture.length)
+      advance(stream, quote.length)
     end
 
     chars
@@ -94,11 +90,11 @@ class Lang::Token
     self.class::START
   end
 
-  def up_to
-    self.class::UP_TO
+  def capture
+    self.class::CAPTURE
   end
 
-  def capture?
-    self.class::CAPTURE
+  def quote?
+    self.class::QUOTE
   end
 end
