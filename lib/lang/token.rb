@@ -60,7 +60,7 @@ class Lang::Token
 
   def match?(stream, test)
     if test.is_a? ::String
-      stream.peek(amount: test.length) == test
+      stream.peek(test.length) == test
     elsif test.is_a? ::Array
       !!(test.find {|t| match?(stream, t) })
     else
@@ -69,7 +69,7 @@ class Lang::Token
   end
 
   def advance(stream, amount)
-    stream.advance(amount: amount)
+    stream.advance(amount)
   end
 
   def advance_until(stream, test)

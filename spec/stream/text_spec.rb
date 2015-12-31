@@ -35,11 +35,11 @@ describe Lang::TextStream do
     end
 
     it "returns many characters" do
-      expect(subject.peek(amount: 5)).to eq('#peek')
+      expect(subject.peek(5)).to eq('#peek')
     end
 
     it "returns nothing for an overflow" do
-      expect(subject.peek(amount: 100)).to be_nil
+      expect(subject.peek(100)).to be_nil
     end
 
     it "does not advance the cursor" do
@@ -58,11 +58,11 @@ describe Lang::TextStream do
     end
 
     it "returns many characters" do
-      expect(subject.advance(amount: 8)).to eq('#advance')
+      expect(subject.advance(8)).to eq('#advance')
     end
 
     it "raises for an overflow" do
-      expect { subject.advance(amount: 100) }.to raise_error(RuntimeError)
+      expect { subject.advance(100) }.to raise_error(RuntimeError)
     end
 
     it "advances the cursor" do

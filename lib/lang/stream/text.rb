@@ -18,13 +18,13 @@ class Lang::TextStream
     reset
   end
 
-  def peek(amount: 1)
+  def peek(amount = 1)
     if @offset + amount <= @input.length
       @input.slice(@offset, amount).join
     end
   end
 
-  def advance(amount: 1)
+  def advance(amount = 1)
     chars = ''
 
     amount.times do
