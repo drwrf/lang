@@ -1,7 +1,7 @@
 require 'pp'
 require File.expand_path('../../lib/lang', __FILE__)
 
-pp Lang::Environment.new.tokenize(<<eos
+pp Lang::Environment.new.parse(<<eos
 # You can define variables...
 var year: 2015
 var month: 'December'
