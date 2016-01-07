@@ -1,8 +1,7 @@
 require 'pp'
 require File.expand_path('../../lib/lang', __FILE__)
 
-tokenizer = Lang::Tokenizer.new
-program = <<eos
+pp Lang::Environment.new.tokenize(<<eos
 # You can define variables...
 var year: 2015
 var month: 'December'
@@ -45,5 +44,4 @@ def add (number1, number2)
   number1 + number2
 
 eos
-
-pp tokenizer.tokenize(program)
+)

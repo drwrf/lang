@@ -15,10 +15,6 @@ class Lang::Tokenizer
   end
 
   def tokenize(stream)
-    if stream.is_a? ::String
-      stream = Lang::TextStream.new(stream)
-    end
-
     tokens = []
 
     stream.loop do
