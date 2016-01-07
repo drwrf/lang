@@ -1,10 +1,47 @@
 class Lang::TokenStream
-  def initialize(tokens)
-    @tokens = tokens
+  def initialize(input)
+    @input = input
     @offset = 0
   end
 
-  def next
-    @tokens[@offset]
+  def loop
+    while !eof?
+      yield
+    end
+
+    reset
+  end
+
+  def peek(amount: 1)
+    if @offset + amount <= @input.length
+      @input.slice(@offset, amount)
+    end
+  end
+
+  def advance(amount: 1)
+    tokens = []
+
+    amount.times do
+      token = self.peek
+
+      if !token
+        raise RuntimeError
+      end
+
+      @offset += 1
+      tokens += token
+    end
+
+    tokens
+  end
+
+  private
+
+  def reset
+    @offset = 0
+  end
+
+  def eof?
+    @offset >= @input.length
   end
 end
