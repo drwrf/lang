@@ -12,13 +12,17 @@ class Lang::TokenStream
     reset
   end
 
-  def peek(amount: 1)
+  def next
+    peek.first
+  end
+
+  def peek(amount = 1)
     if @offset + amount <= @input.length
       @input.slice(@offset, amount)
     end
   end
 
-  def advance(amount: 1)
+  def advance(amount = 1)
     tokens = []
 
     amount.times do

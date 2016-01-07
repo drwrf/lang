@@ -1,11 +1,7 @@
 class Lang::Parser
   TYPES = [
-    Lang::Node::Number
+    Lang::Grammar::Number
   ]
-
-  def initialize(types: nil)
-    @types = types
-  end
 
   def parse(stream)
     nodes = []

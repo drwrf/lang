@@ -11,8 +11,8 @@ Lang::Token.define do
   # Comments
   token :Comment, "#", capture: "\n"
 
-  # Integers and floats, TODO: make distinct
-  token :Number, /[0-9]/, capture: /[^0-9.]/
+  # Integers and floats
+  token :Number, /[0-9]/, capture: /[^0-9]/
 
   # All types of strings
   token :String, ['"', "'"], quote: true
