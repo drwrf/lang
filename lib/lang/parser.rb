@@ -16,6 +16,12 @@ class Lang::Parser
         next
       end
 
+      # Ignore comment tokens
+      if stream.next.is_type?(Lang::Token::Comment)
+        stream.advance
+        next
+      end
+
       # For now, just advance through unknown nodes
       stream.advance
     end
