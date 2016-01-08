@@ -5,7 +5,6 @@ class Lang::Tokenizer
     Lang::Token::Identifier,
     Lang::Token::Operator,
     Lang::Token::String,
-    Lang::Token::Number,
     Lang::Token::Bracket,
     Lang::Token::Delimiter,
   ]
