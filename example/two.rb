@@ -7,5 +7,11 @@ pp Lang::Environment.new.parse(<<eos
 
 # Floats
 1.1
+
+# Double quoted strings
+"String!"
+
+# Single quoted strings
+'String!'
 eos
 )
