@@ -15,34 +15,51 @@ module Lang::Grammar
       @expr.parse(stream)
     end
 
-    def expect(stream, type, value: nil)
-      token = stream.next
+    def match(stream, type, value: nil, offset: 0)
+      token = stream.peek(1, offset = offset)
 
-      if token.is_type?(type) && (!value || token.value == value)
-        token
-      else
-        false
-      end
-    end
-
-    def expect!(stream, type, value: nil)
-      if expect(type, value: value) == false
-        raise RuntimeError
-      end
-
-      true
-    end
-
-    def matches_type?(stream, tests)
-      tests = [*tests]
-      tokens = stream.peek(tests.length)
-
-      if !tokens
+      if !token
         return false
       end
 
-      tests.each_with_index do |test, i|
-        if !tokens[i].is_type?(test)
+      token = token.first
+
+      if !token || !token.is_type?(type)
+        return false
+      end
+
+      if value && value.is_a?(::String) && value != token.value
+        return false
+      end
+
+      if value && value.is_a?(::Regexp) && !(value =~ token.value)
+        return false
+      end
+
+      token
+    end
+
+    def match!(stream, type, value: nil)
+      token = match(stream, type, value: value)
+
+      if !token
+        raise RuntimeError
+      end
+
+      token
+    end
+
+    def match_all(stream, types)
+      tokens = []
+      offset = 0
+
+      types.each do |type, value|
+        token = match(stream, type, value: value, offset: offset)
+        offset += 1
+
+        if token
+          tokens.push(token)
+        else
           return false
         end
       end

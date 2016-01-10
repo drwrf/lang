@@ -1,7 +1,7 @@
 module Lang::Grammar
   class String < Base
     def parseable?(stream)
-      matches_type?(stream, Lang::Token::String)
+      match(stream, Lang::Token::String)
     end
 
     def parse(stream)

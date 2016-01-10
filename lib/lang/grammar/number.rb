@@ -1,7 +1,9 @@
 module Lang::Grammar
   class Number < Base
+    NUMBER = /[0-9]+/
+
     def parseable?(stream)
-      matches_type?(stream, Lang::Token::Identifier) && is_number?(stream.next.value)
+      match(stream, Lang::Token::Identifier, value: NUMBER)
     end
 
     def parse(stream)
@@ -21,15 +23,10 @@ module Lang::Grammar
     private
 
     def is_fractional?(stream)
-      return false if !matches_type?(stream, [Lang::Token::Delimiter,
-                                              Lang::Token::Identifier])
-
-      parts = stream.peek(2)
-      parts[0].value == '.' && is_number?(parts[1].value)
-    end
-
-    def is_number?(value)
-      value =~ /[0-9]+/
+      match_all(stream, {
+        Lang::Token::Delimiter => '.',
+        Lang::Token::Identifier => NUMBER
+      })
     end
   end
 end

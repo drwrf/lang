@@ -1,12 +1,10 @@
 module Lang::Grammar
   class Call < Base
     def parseable?(stream)
-      tokens = matches_type?(stream, [
-        Lang::Token::Identifier,
-        Lang::Token::Bracket,
-      ])
-
-      tokens && tokens[1].value == '('
+      match_all(stream, {
+        Lang::Token::Identifier => nil,
+        Lang::Token::Bracket => '(',
+      })
     end
 
     def parse(stream)
@@ -30,10 +28,10 @@ module Lang::Grammar
 
       # Ensure that there is either a comma or this is the
       # end of the argument list before adding another expression
-      if expect(Lang::Token::Delimiter, value: ',')
+      if match(stream, Lang::Token::Delimiter, value: ',')
         stream.advance
       else
-        expect!(Lang::Token::Bracket, value: ')')
+        match!(stream, Lang::Token::Bracket, value: ')')
       end
 
       arg

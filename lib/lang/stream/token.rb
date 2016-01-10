@@ -16,9 +16,11 @@ class Lang::TokenStream
     peek.first
   end
 
-  def peek(amount = 1)
-    if @offset + amount <= @input.length
-      @input.slice(@offset, amount)
+  def peek(amount = 1, offset = 0)
+    offset = @offset + offset
+
+    if offset + amount <= @input.length
+      @input.slice(offset, amount)
     end
   end
 
