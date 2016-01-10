@@ -12,10 +12,11 @@ module Lang::Grammar
     end
 
     def parse(stream)
-      delimited = if match(stream, Lang::Token::Bracket, value: '(')
+      delimited = match(stream, Lang::Token::Bracket, value: '(')
+
+      if delimited
         stream.advance
         discard_whitespace(stream)
-        true
       end
 
       node = types.find do |n|
@@ -25,8 +26,9 @@ module Lang::Grammar
       expression = node.parse(stream) if node
 
       if delimited
+        match!(stream, Lang::Token::Bracket, value: ')')
+        stream.advance
         discard_whitespace(stream)
-        match!(stream, Lang::Token::Bracket, value: ')') && stream.advance
       end
 
       expression

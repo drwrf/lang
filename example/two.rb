@@ -18,6 +18,9 @@ pp Lang::Environment.new.parse(<<eos
 print('Hello',
       'World')
 
+# Calls without parentheses
+print + 1
+
 # Arrays
 [
   'test',

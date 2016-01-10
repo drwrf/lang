@@ -17,14 +17,13 @@ module Lang::Grammar
     private
 
     def parse_args(stream)
-      if args_parser.parseable?(stream)
-        args_parser.parse(stream)
+      if arguments.parseable?(stream)
+        arguments.parse(stream)
       end
     end
 
-    def args_parser
-      @args_parser ||= Lang::Grammar::ExpressionList.new(
-        open_bracket: '(', close_bracket: ')')
+    def arguments
+      @arguments ||= Lang::Grammar::Arguments.new
     end
   end
 end
