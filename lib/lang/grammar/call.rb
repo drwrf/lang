@@ -30,18 +30,13 @@ module Lang::Grammar
 
       # Ensure that there is either a comma or this is the
       # end of the argument list before adding another expression
-      if stream.expect(Lang::Token::Delimiter, value: ',')
+      if expect(Lang::Token::Delimiter, value: ',')
         stream.advance
       else
-        stream.expect!(Lang::Token::Bracket, value: ')')
+        expect!(Lang::Token::Bracket, value: ')')
       end
 
       arg
-    end
-
-    def parse_expression(stream)
-      @expr ||= Lang::Grammar::Expression.new
-      @expr.parse(stream)
     end
   end
 end

@@ -10,6 +10,29 @@ module Lang::Grammar
 
     private
 
+    def parse_expression(stream)
+      @expr ||= Lang::Grammar::Expression.new
+      @expr.parse(stream)
+    end
+
+    def expect(stream, type, value: nil)
+      token = stream.next
+
+      if token.is_type?(type) && (!value || token.value == value)
+        token
+      else
+        false
+      end
+    end
+
+    def expect!(stream, type, value: nil)
+      if expect(type, value: value) == false
+        raise RuntimeError
+      end
+
+      true
+    end
+
     def matches_type?(stream, tests)
       tests = [*tests]
       tokens = stream.peek(tests.length)
@@ -25,22 +48,6 @@ module Lang::Grammar
       end
 
       tokens
-    end
-
-    def expect!(stream, type: nil, value: nil)
-      token = stream.next
-
-      if !token
-        raise RuntimeError
-      end
-
-      if type
-        raise RuntimeError if !token.is_a? type
-      end
-
-      if value
-        raise RuntimeError if token.value != value
-      end
     end
   end
 end
