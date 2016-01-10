@@ -11,13 +11,9 @@ module Lang::Grammar
       stream.advance
 
       while !match(stream, Lang::Token::Bracket, value: ']') do
-        # Whitespace is not significant inside arrays, so they are ignored
-        if match(stream, Lang::Token::Indent)
-          stream.advance
-          next
-        end
-
+        discard_whitespace(stream)
         elements.push(parse_element(stream))
+        discard_whitespace(stream)
       end
 
       match!(stream, Lang::Token::Bracket, value: ']') && stream.advance
@@ -30,10 +26,17 @@ module Lang::Grammar
     def parse_element(stream)
       element = parse_expression(stream)
 
-      # Trailing commas are required at this point
-      match!(stream, Lang::Token::Delimiter, value: ',') && stream.advance
+      # Ensure that there is either a trailing comma or this is the
+      # end of the argument list before adding another expression
+      if match(stream, Lang::Token::Delimiter, value: ',')
+        stream.advance
+      else
+        discard_whitespace(stream)
+        match!(stream, Lang::Token::Bracket, value: ']')
+      end
 
       element
     end
+
   end
 end

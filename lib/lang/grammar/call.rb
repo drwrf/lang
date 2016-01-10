@@ -15,10 +15,13 @@ module Lang::Grammar
       stream.advance
 
       while !match(stream, Lang::Token::Bracket, value: ')')
+        discard_whitespace(stream)
         args.push(parse_argument(stream))
+        discard_whitespace(stream)
       end
 
-      match!(stream, Lang::Token::Bracket, value: ')') && stream.advance
+      # Get rid of the trailing parens
+      stream.advance
 
       Lang::Node::Call.new(method, args)
     end
@@ -33,6 +36,7 @@ module Lang::Grammar
       if match(stream, Lang::Token::Delimiter, value: ',')
         stream.advance
       else
+        discard_whitespace(stream)
         match!(stream, Lang::Token::Bracket, value: ')')
       end
 

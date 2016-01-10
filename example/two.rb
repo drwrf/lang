@@ -15,13 +15,16 @@ pp Lang::Environment.new.parse(<<eos
 'String!'
 
 # Function calls
-call('test', 1)
+print('Hello',
+      'World')
 
 # Arrays
 [
   'test',
   1,
-  [ call('test'), ],
+  [
+    call('test')
+  ]
 ]
 eos
 )
