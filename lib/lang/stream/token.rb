@@ -12,10 +12,6 @@ class Lang::TokenStream
     reset
   end
 
-  def next
-    peek.first
-  end
-
   def peek(amount = 1, offset: 0)
     offset = @offset + offset
 

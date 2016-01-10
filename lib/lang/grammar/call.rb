@@ -14,7 +14,7 @@ module Lang::Grammar
       # Skip past the opening parentheses
       stream.advance
 
-      while stream.next.value != ')'
+      while !match(stream, Lang::Token::Bracket, value: ')')
         args.push(parse_argument(stream))
       end
 

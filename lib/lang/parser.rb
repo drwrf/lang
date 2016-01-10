@@ -19,7 +19,7 @@ class Lang::Parser
       end
 
       # Ignore comment tokens
-      if stream.next.is_type?(Lang::Token::Comment)
+      if stream.peek && stream.peek.first.is_type?(Lang::Token::Comment)
         stream.advance
         next
       end
