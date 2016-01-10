@@ -1,7 +1,8 @@
 class Lang::Parser
   TYPES = [
     Lang::Grammar::Number,
-    Lang::Grammar::String
+    Lang::Grammar::String,
+    Lang::Grammar::Call
   ]
 
   def parse(stream)

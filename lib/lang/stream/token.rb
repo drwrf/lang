@@ -39,6 +39,20 @@ class Lang::TokenStream
     tokens
   end
 
+  def expect(type, value: nil)
+    token = self.next
+
+    if token.is_type?(type) && (!value || token.value == value)
+      token
+    else
+      false
+    end
+  end
+
+  def expect!(type, value: nil)
+    raise RuntimeError if expect(type, value: value) == false
+  end
+
   private
 
   def reset
