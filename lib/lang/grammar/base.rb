@@ -15,10 +15,17 @@ module Lang::Grammar
       @expr.parse(stream)
     end
 
+    def discard_whitespace(stream)
+      # Eat any whitespace or comments until the next
+      discard_tokens(stream, [
+        Lang::Token::Indent,
+        Lang::Token::Comment
+      ])
+    end
+
     def discard_tokens(stream, types)
       loop do
         types.each do |type, value|
-          pp 'hi'
           if match(stream, type, value: value)
             stream.advance
             next

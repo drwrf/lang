@@ -43,13 +43,5 @@ module Lang::Grammar
 
       element
     end
-
-    def discard_whitespace(stream)
-      # Eat any whitespace or comments until the next
-      discard_tokens(stream, [
-        Lang::Token::Indent,
-        Lang::Token::Comment
-      ])
-    end
   end
 end

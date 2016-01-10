@@ -26,5 +26,8 @@ print('Hello',
     call('test')
   ]
 ]
+
+# Delimited expressions
+('test')
 eos
 )
