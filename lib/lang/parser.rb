@@ -1,5 +1,6 @@
 class Lang::Parser
   TYPES = [
+    Lang::Grammar::UnaryOperator,
     Lang::Grammar::Number,
     Lang::Grammar::String,
     Lang::Grammar::Array,

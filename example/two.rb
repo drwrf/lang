@@ -32,5 +32,8 @@ print + 1
 
 # Delimited expressions
 ('test')
+
+# Negated expressions
+!'true'
 eos
 )

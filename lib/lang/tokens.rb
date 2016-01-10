@@ -20,6 +20,7 @@ Lang::Token.define do
     '>=', '>',
     '<=', '<',
     '==', '!=',
+    '!',
   ]
 
   # Used for certain primitives, like lists and hashes
