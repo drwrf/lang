@@ -14,7 +14,14 @@ pp Lang::Environment.new.parse(<<eos
 # Single quoted strings
 'String!'
 
-# Calls without arguments
+# Function calls
 call('test', 1)
+
+# Arrays
+[
+  'test',
+  1,
+  [ call('test'), ],
+]
 eos
 )

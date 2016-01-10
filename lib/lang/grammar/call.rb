@@ -18,6 +18,8 @@ module Lang::Grammar
         args.push(parse_argument(stream))
       end
 
+      match!(stream, Lang::Token::Bracket, value: ')') && stream.advance
+
       Lang::Node::Call.new(method, args)
     end
 

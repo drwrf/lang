@@ -2,6 +2,7 @@ class Lang::Parser
   TYPES = [
     Lang::Grammar::Number,
     Lang::Grammar::String,
+    Lang::Grammar::Array,
     Lang::Grammar::Call
   ]
 

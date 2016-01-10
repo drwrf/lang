@@ -3,6 +3,8 @@ module Lang::Grammar
     TYPES = [
       Lang::Grammar::Number,
       Lang::Grammar::String,
+      Lang::Grammar::Array,
+      Lang::Grammar::Call,
     ]
 
     def parseable?(stream)
