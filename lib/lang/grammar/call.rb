@@ -9,38 +9,22 @@ module Lang::Grammar
 
     def parse(stream)
       method = stream.advance
-      args = []
-
-      # Skip past the opening parentheses
-      stream.advance
-
-      while !match(stream, Lang::Token::Bracket, value: ')')
-        discard_whitespace(stream)
-        args.push(parse_argument(stream))
-        discard_whitespace(stream)
-      end
-
-      # Get rid of the trailing parens
-      stream.advance
+      args = parse_args(stream)
 
       Lang::Node::Call.new(method, args)
     end
 
     private
 
-    def parse_argument(stream)
-      arg = parse_expression(stream)
-
-      # Ensure that there is either a comma or this is the
-      # end of the argument list before adding another expression
-      if match(stream, Lang::Token::Delimiter, value: ',')
-        stream.advance
-      else
-        discard_whitespace(stream)
-        match!(stream, Lang::Token::Bracket, value: ')')
+    def parse_args(stream)
+      if args_parser.parseable?(stream)
+        args_parser.parse(stream)
       end
+    end
 
-      arg
+    def args_parser
+      @args_parser ||= Lang::Grammar::ExpressionList.new(
+        open_bracket: '(', close_bracket: ')')
     end
   end
 end
