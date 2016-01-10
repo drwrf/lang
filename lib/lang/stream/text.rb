@@ -18,9 +18,11 @@ class Lang::TextStream
     reset
   end
 
-  def peek(amount = 1)
-    if @offset + amount <= @input.length
-      @input.slice(@offset, amount).join
+  def peek(amount = 1, offset: 0)
+    offset = offset + @offset
+
+    if offset + amount <= @input.length
+      @input.slice(offset, amount).join
     end
   end
 

@@ -16,7 +16,7 @@ module Lang::Grammar
     end
 
     def match(stream, type, value: nil, offset: 0)
-      token = stream.peek(1, offset = offset)
+      token = stream.peek(offset: offset)
 
       if !token
         return false
