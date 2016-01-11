@@ -1,24 +1,13 @@
 class Lang::Parser
-  TYPES = [
-    Lang::Grammar::UnaryOperator,
-    Lang::Grammar::Number,
-    Lang::Grammar::String,
-    Lang::Grammar::Array,
-    Lang::Grammar::Call
-  ]
-
   def parse(stream)
     nodes = []
 
     stream.loop do
-      node = types.find do |n|
-        n.parseable?(stream)
-      end
-
-      if node
-        nodes.push(node.parse(stream))
+      if expr.parseable?(stream)
+        nodes.push(expr.parse(stream))
         next
       end
+
 
       # Ignore comment tokens
       if stream.peek && stream.peek.first.is_type?(Lang::Token::Comment)
@@ -35,7 +24,7 @@ class Lang::Parser
 
   private
 
-  def types
-    @types ||= TYPES.map(&:new)
+  def expr
+    @expr ||= Lang::Grammar::Expression.new
   end
 end

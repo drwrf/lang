@@ -9,7 +9,13 @@ module Lang::Grammar
     ]
 
     def parseable?(stream)
-      true
+      types.each do |type|
+        if type.parseable?(stream)
+          return true
+        end
+      end
+
+      false
     end
 
     def parse(stream)
