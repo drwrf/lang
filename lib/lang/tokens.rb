@@ -14,14 +14,18 @@ Lang::Token.define do
   # All types of strings
   token :String, ['"', "'"], quote: true
 
-  # Operators are used for maths...
-  token :Operator, [
+  # Binary operators used for maths and comparisons
+  token :BinaryOperator, [
     '+', '-',
+    '**', '*',
+    '%', '/',
     '>=', '>',
     '<=', '<',
     '==', '!=',
-    '!',
   ]
+
+  # Unary operators, used for negation
+  token :UnaryOperator, '!'
 
   # Used for certain primitives, like lists and hashes
   token :Bracket, [

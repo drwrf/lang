@@ -1,7 +1,7 @@
 module Lang::Grammar
   class UnaryOperator < Base
     def parseable?(stream)
-      match(stream, Lang::Token::Operator, value: '!')
+      match(stream, Lang::Token::UnaryOperator, value: '!')
     end
 
     def parse(stream)

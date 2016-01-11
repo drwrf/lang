@@ -1,15 +1,9 @@
 module Lang::Grammar
   class Expression < Base
-    TYPES = [
-      Lang::Grammar::UnaryOperator,
-      Lang::Grammar::Number,
-      Lang::Grammar::String,
-      Lang::Grammar::Array,
-      Lang::Grammar::Call,
-    ]
-
     def parseable?(stream)
-      types.each do |type|
+      # All expressions must start with one
+      # of the basic types of expressions.
+      simple_types.each do |type|
         if type.parseable?(stream)
           return true
         end
@@ -26,11 +20,23 @@ module Lang::Grammar
         discard_whitespace(stream)
       end
 
-      node = types.find do |n|
-        n.parseable?(stream)
+      type = simple_types.find do |t|
+        t.parseable?(stream)
       end
 
-      expression = node.parse(stream) if node
+      if type
+        expression = type.parse(stream)
+      else
+        raise RuntimeError
+      end
+
+      type = compound_types.find do |t|
+        t.parseable?(stream)
+      end
+
+      if type
+        expression = type.parse(stream, expression)
+      end
 
       if delimited
         match!(stream, Lang::Token::Bracket, value: ')')
@@ -43,8 +49,20 @@ module Lang::Grammar
 
     private
 
-    def types
-      @types ||= TYPES.map(&:new)
+    def simple_types
+      @simple_types ||= [
+        Lang::Grammar::UnaryOperator,
+        Lang::Grammar::Number,
+        Lang::Grammar::String,
+        Lang::Grammar::Array,
+        Lang::Grammar::Call,
+      ].map(&:new)
+    end
+
+    def compound_types
+      @compound_types ||= [
+        Lang::Grammar::BinaryOperator,
+      ].map(&:new)
     end
   end
 end

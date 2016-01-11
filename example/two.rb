@@ -14,13 +14,6 @@ pp Lang::Environment.new.parse(<<eos
 # Single quoted strings
 'String!'
 
-# Function calls
-print('Hello',
-      'World')
-
-# Calls without parentheses
-print + 1
-
 # Arrays
 [
   'test',
@@ -34,6 +27,12 @@ print + 1
 ('test')
 
 # Negated expressions
-!'true'
+!(!'test')
+
+# Maths
+1 / 1 + 1 - 1 * 1 ** 1 % 1
+
+# Comparisons
+1 == 1
 eos
 )
