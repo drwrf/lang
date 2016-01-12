@@ -34,5 +34,11 @@ pp Lang::Environment.new.parse(<<eos
 
 # Comparisons
 1 == 1
+
+# Calls without parentheses
+call 1, 2, nested(1, 2, 3)
+
+# Multi-line calls (parens only)
+call 1 == 2, false()
 eos
 )

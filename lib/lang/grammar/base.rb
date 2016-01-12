@@ -10,9 +10,12 @@ module Lang::Grammar
 
     private
 
-    def parse_expression(stream)
+    def expr
       @expr ||= Lang::Grammar::Expression.new
-      @expr.parse(stream)
+    end
+
+    def parse_expression(stream)
+      expr.parse(stream)
     end
 
     def discard_whitespace(stream)

@@ -2,8 +2,7 @@ module Lang::Grammar
   class Call < Base
     def parseable?(stream)
       match_all(stream, {
-        Lang::Token::Identifier => nil,
-        Lang::Token::Bracket => '(',
+        Lang::Token::Identifier => nil
       })
     end
 
