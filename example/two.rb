@@ -40,5 +40,10 @@ call 1, 2, nested(1, 2, 3)
 
 # Multi-line calls (parens only)
 call 1 == 2, false()
+
+# Hashes
+{
+  test: true
+}
 eos
 )

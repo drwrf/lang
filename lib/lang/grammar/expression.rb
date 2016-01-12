@@ -55,6 +55,7 @@ module Lang::Grammar
         Lang::Grammar::Number,
         Lang::Grammar::String,
         Lang::Grammar::Array,
+        Lang::Grammar::Hash,
         Lang::Grammar::Call,
       ].map(&:new)
     end
