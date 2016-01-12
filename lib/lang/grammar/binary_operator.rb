@@ -8,23 +8,9 @@ module Lang::Grammar
       operator = stream.advance.first
       right = parse_expression(stream)
 
-      if is_math?(operator)
-        Lang::Node::Math.new(operator, left, right)
-      elsif is_comparison?(operator)
-        Lang::Node::Comparison.new(operator, left, right)
-      else
-        raise RuntimeError
-      end
-    end
-
-    private
-
-    def is_math?(operator)
-      ['+', '-', '**', '*', '%', '/'].include?(operator.value)
-    end
-
-    def is_comparison?(operator)
-      ['>=', '>', '<=', '<', '==', '!='].include?(operator.value)
+      Lang::Node::Call.new(operator, Lang::Node::Arguments.new([
+        left, right
+      ]))
     end
   end
 end

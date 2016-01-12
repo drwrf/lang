@@ -8,7 +8,7 @@ module Lang::Grammar
       operator = stream.advance
       operand = parse_expression(stream)
 
-      Lang::Node::UnaryOperator.new(operator, operand)
+      Lang::Node::Call.new(operator, Lang::Node::Arguments.new([operand]))
     end
   end
 end

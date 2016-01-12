@@ -22,6 +22,7 @@ Lang::Token.define do
     '>=', '>',
     '<=', '<',
     '==', '!=',
+    '&&', '||'
   ]
 
   # Unary operators, used for negation

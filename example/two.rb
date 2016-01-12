@@ -35,6 +35,10 @@ pp Lang::Environment.new.parse(<<eos
 # Comparisons
 1 == 1
 
+# Logical operators
+true || false
+true && false
+
 # Calls without parentheses
 call 1, 2, nested(1, 2, 3)
 
