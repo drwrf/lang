@@ -49,5 +49,8 @@ call 1 == 2, false()
 {
   test: true
 }
+
+# Inline blocks
+var forward: "drawrof"
 eos
 )

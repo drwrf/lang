@@ -9,8 +9,9 @@ module Lang::Grammar
     def parse(stream)
       method = stream.advance
       args = parse_args(stream)
+      block = parse_block(stream)
 
-      Lang::Node::Call.new(method, args)
+      Lang::Node::Call.new(method, args, block)
     end
 
     private
@@ -21,8 +22,18 @@ module Lang::Grammar
       end
     end
 
+    def parse_block(stream)
+      if block.parseable?(stream)
+        block.parse(stream)
+      end
+    end
+
     def arguments
       @arguments ||= Lang::Grammar::Arguments.new
+    end
+
+    def block
+      @block ||= Lang::Grammar::Block.new
     end
   end
 end
